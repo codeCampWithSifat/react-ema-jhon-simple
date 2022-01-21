@@ -4,6 +4,7 @@ import { getDatabaseCart, processOrder, removeFromDatabaseCart } from '../../uti
 import Cart from '../Cart/Cart';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import happyImage from '../../images/giphy.gif'
+import { useNavigate } from 'react-router-dom';
 const Review = () => {
     const [cart , setCart] = useState([]);
     const [orderPalced , setOrderPlaced] = useState(false);
@@ -26,10 +27,9 @@ const Review = () => {
         
     },[])
 
-    const handlePlaceOrder = () => {
-        setCart([])
-        setOrderPlaced(true)
-        processOrder();    
+    const navigate = useNavigate()
+    const handleProceedCheckout = () => {
+          navigate("/Shipment")
     }
 
     let thankYou ;
@@ -50,7 +50,7 @@ const Review = () => {
             
             <div className="cart-container">
                 <Cart cart={cart}>
-                    <button onClick={handlePlaceOrder} className="main-button">Palce Order</button>
+                    <button onClick={handleProceedCheckout} className="main-button">proceed to checkout</button>
                 </Cart>
             </div>
         </div>
