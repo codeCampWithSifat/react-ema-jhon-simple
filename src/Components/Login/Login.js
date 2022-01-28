@@ -32,7 +32,9 @@ function Login() {
         email : email,
         photo : photoURL
       }
-      setUser(signInUser)
+      setUser(signInUser);
+      setLoggedInUser(signInUser);
+      navigate(from, { replace: true });
     })
     .catch(err => {
       console.log(err)
@@ -51,19 +53,21 @@ function Login() {
         success : false
       }
       setUser(signOutUser)
+     
     })
   }
 
-  const gitHubLogin = () => {
-    const provider = new GithubAuthProvider()
-    signInWithPopup(auth , provider)
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.log(err)
-    })
-  } 
+  // const gitHubLogin = () => {
+  //   const provider = new GithubAuthProvider()
+  //   signInWithPopup(auth , provider)
+  //   .then(res => {
+      
+  //     console.log(res)
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //   })
+  // } 
    // email password login 
    const handleBlur = (e) => {
     //  console.log(e.target.name , e.target.value);
@@ -144,7 +148,7 @@ function Login() {
      })
    }
   return (
-    <div style = {{textAlign: 'center'}}>
+    <div style = {{textAlign: 'center'}}> <br />
      {user.isSigned ? <button onClick={googleLogOut}>Google Sign Out</button> : 
                       <button onClick={googleLogin}>Googel Sign In</button>
      }
@@ -155,9 +159,8 @@ function Login() {
           <p>Email : {user.email}</p>
           <img src={user.photo} alt="" />
         </div>
-      } <br /><br />
-      <button onClick={gitHubLogin}>Git Hub Login</button>
-       <br /> <br />
+      } <br />
+      {/* <button onClick={gitHubLogin}>Git Hub Login</button> */}
 
        <form onSubmit={handleSubmit} action="">
          <h2>Our Authentication System</h2>
