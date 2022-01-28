@@ -13,6 +13,7 @@ import NoMatch from './Components/NoMatch/NoMatch';
 import ProductDetail from './Components/ProductDetail/ProductDetail';
 import Login from './Components/Login/Login';
 import Shipment from './Components/Shipment/Shipment';
+import PrivateRoute from './Components/PrivataRoute/PrivateRoute';
 
 
 
@@ -22,16 +23,22 @@ function App() {
   const [loggedInUser , setLoggedInUser] = useState({})
   return (
     <UserContext.Provider  value= {[loggedInUser , setLoggedInUser]} >
-        <Header/>
+      <p>Email :{loggedInUser.email}</p>
+       
       <BrowserRouter>
+      <Header/>
       <Routes>
-        <Route path ="" element ={<Shop/>}/>
+        <Route path ="/" element ={<Shop/>}/>
         <Route path ="/shop" element ={<Shop/>}/>
         <Route path ="/review" element ={<Review/>} />
-        <Route path ="/inventory" element={<Inventory/>}/>
+        <Route path ="/inventory" element={<PrivateRoute>
+          <Inventory/>
+        </PrivateRoute>}/>
         <Route path="/product/:productKey" element={<ProductDetail/>} />
         <Route path ="/login" element = {<Login/>}/>
-        <Route path ="/shipment" element = {<Shipment/>}/>
+        <Route path ="/shipment" element = {<PrivateRoute>
+          <Shipment/>
+        </PrivateRoute>}/>
         <Route path ="*" element={<NoMatch/>}/>
       </Routes>
       </BrowserRouter>

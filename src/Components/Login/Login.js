@@ -1,8 +1,18 @@
-import {GoogleAuthProvider, signInWithPopup,GithubAuthProvider, getAuth, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from 'firebase/auth'
+import {
+  GoogleAuthProvider, signInWithPopup,GithubAuthProvider,
+  getAuth, signOut, createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, updateProfile} from 'firebase/auth'
 import { auth } from './firebase.config';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from '../../App';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Login() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+
+  const [loggedInUser , setLoggedInUser] = useContext(UserContext)
   const [newUser , setNewUser] = useState(false);
   const [user , setUser] = useState({
     isSigned : false,
@@ -105,6 +115,8 @@ function Login() {
         newUserInfo.error = '';
         newUserInfo.success = true;
         setUser(newUserInfo);
+        setLoggedInUser(newUserInfo);
+        navigate(from, { replace: true });
         console.log("sign in user info" , res.user);
       })
       .catch((error) => {
